@@ -46,7 +46,7 @@ class ImageWatermark implements PluginInterface, EventSubscriberInterface
     {
         $dst_x = $dst_y = 0;
 
-        $position = Config::get('ImageWatermark.position');
+        $position = $this->app['config']->get('ImageWatermark.position');
 
         if (isset($position['right'])) {
             $position_right = $position['right'];
@@ -97,7 +97,7 @@ class ImageWatermark implements PluginInterface, EventSubscriberInterface
             $uploadedImage = Image::create($uploadedFile->getContents());
             $uploadedImageGD = $uploadedImage->getGDImage();
 
-            $watermarkImagePath = Config::get('ImageWatermark.imagePath');
+            $watermarkImagePath = $this->app['config']->get('ImageWatermark.imagePath');
 
             if(Image::isSupportedExtension(pathinfo($watermarkImagePath, PATHINFO_EXTENSION))) {
                 $watermarkImage = Image::create(file_get_contents($watermarkImagePath));
