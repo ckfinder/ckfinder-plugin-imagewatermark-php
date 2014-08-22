@@ -3,7 +3,7 @@ CKFinder ImageWatermark plugin
 
 This plugin adds a watermark to images uploaded with CKFinder.
 
-**Supported images extensions:** jpg, jpeg, gif, png
+**Supported images extensions:** jpg, jpeg, gif, png.
 
 ## Configuration options
 
@@ -16,7 +16,7 @@ To set custom image to use as a watermark add following option to main CKFinder 
 ),
 ```
 
-**Note:** make sure your image path is absolute.
+**Note:** make sure your image path is absolute, and for best results use transparent png image.
 
 
 To change default watermark position you need to add `position` option in plugin configuration node:
@@ -34,7 +34,7 @@ To change default watermark position you need to add `position` option in plugin
 
 The `position` option takes two arguments corresponding to image borders. Possible `position` keys values:
 `top`, `right`, `bottom`, `left`. Suboptions `top`-`bottom` and `left`-`right` are mutually exclusive, and can't
-be used together. Each position suboption can take as value an integer - a distance to chosen border in
+be used together. Each position suboption can take as value an integer - a distance to chosen border measured in
 pixels, or string 'center' to make watermark centered between current and opposite border.
 
 
