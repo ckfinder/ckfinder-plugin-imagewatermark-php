@@ -5,7 +5,6 @@ namespace CKSource\CKFinder\Plugin\ImageWatermark;
 
 
 use CKSource\CKFinder\CKFinder;
-use CKSource\CKFinder\Config;
 use CKSource\CKFinder\Event\CKFinderEvent;
 use CKSource\CKFinder\Event\FileUploadEvent;
 use CKSource\CKFinder\Image;
@@ -26,7 +25,7 @@ class ImageWatermark implements PluginInterface, EventSubscriberInterface
 
     public function getJavaScript()
     {
-
+        // Returns JavaScript plugin code for CKFinder frontend
     }
 
     public function getDefaultConfig()
@@ -44,49 +43,47 @@ class ImageWatermark implements PluginInterface, EventSubscriberInterface
 
     public function calculatePosition(Image $uploadedImage, Image $watermarkImage)
     {
-        $dst_x = $dst_y = 0;
+        $dstX = $dstY = 0;
 
         $position = $this->app['config']->get('ImageWatermark.position');
 
         if (isset($position['right'])) {
-            $position_right = $position['right'];
+            $positionRight = $position['right'];
 
-            if ($position_right === 'center') {
-                $dst_x = $uploadedImage->getWidth() / 2 - $watermarkImage->getWidth() / 2;
+            if ($positionRight === 'center') {
+                $dstX = $uploadedImage->getWidth() / 2 - $watermarkImage->getWidth() / 2;
             } else {
-                $dst_x = $uploadedImage->getWidth() - $watermarkImage->getWidth() - (int)$position_right;
+                $dstX = $uploadedImage->getWidth() - $watermarkImage->getWidth() - (int)$positionRight;
             }
         } elseif (isset($position['left'])) {
-            $position_left = $position['left'];
+            $positionLeft = $position['left'];
 
-            if ($position_left === 'center') {
-                $dst_x = $uploadedImage->getWidth() / 2 - $watermarkImage->getWidth() / 2;
+            if ($positionLeft === 'center') {
+                $dstX = $uploadedImage->getWidth() / 2 - $watermarkImage->getWidth() / 2;
             } else {
-                $dst_x = (int)$position_left;
+                $dstX = (int)$positionLeft;
             }
         }
 
         if (isset($position['top'])) {
-            $position_top = $position['top'];
+            $positionTop = $position['top'];
 
-            if ($position_top === 'center') {
-                $dst_y = $uploadedImage->getHeight() / 2 - $watermarkImage->getHeight() / 2;
+            if ($positionTop === 'center') {
+                $dstY = $uploadedImage->getHeight() / 2 - $watermarkImage->getHeight() / 2;
             } else {
-                $dst_y = (int)$position_top;
+                $dstY = (int)$positionTop;
             }
         } elseif (isset($position['bottom'])) {
-            $position_bottom = $position['bottom'];
+            $positionBottom = $position['bottom'];
 
-            if ($position_bottom === 'center') {
-                $dst_y = $uploadedImage->getHeight() / 2 - $watermarkImage->getHeight() / 2;
+            if ($positionBottom === 'center') {
+                $dstY = $uploadedImage->getHeight() / 2 - $watermarkImage->getHeight() / 2;
             } else {
-                $dst_y = $uploadedImage->getHeight() - $watermarkImage->getHeight() - (int)$position_bottom;
+                $dstY = $uploadedImage->getHeight() - $watermarkImage->getHeight() - (int)$positionBottom;
             }
         }
 
-
-
-        return array($dst_x, $dst_y);
+        return array($dstX, $dstY);
     }
 
     public function addWatermark(FileUploadEvent $event)
@@ -99,14 +96,14 @@ class ImageWatermark implements PluginInterface, EventSubscriberInterface
 
             $watermarkImagePath = $this->app['config']->get('ImageWatermark.imagePath');
 
-            if(Image::isSupportedExtension(pathinfo($watermarkImagePath, PATHINFO_EXTENSION))) {
+            if (Image::isSupportedExtension(pathinfo($watermarkImagePath, PATHINFO_EXTENSION))) {
                 $watermarkImage = Image::create(file_get_contents($watermarkImagePath));
                 $watermarkImageGD = $watermarkImage->getGDImage();
 
                 // Calculate position
-                list($dst_x, $dst_y) = $this->calculatePosition($uploadedImage, $watermarkImage);
+                list($dstX, $dstY) = $this->calculatePosition($uploadedImage, $watermarkImage);
 
-                imagecopy($uploadedImageGD, $watermarkImageGD, $dst_x, $dst_y, 0, 0, $watermarkImage->getWidth(), $watermarkImage->getHeight());
+                imagecopy($uploadedImageGD, $watermarkImageGD, $dstX, $dstY, 0, 0, $watermarkImage->getWidth(), $watermarkImage->getHeight());
 
                 $uploadedFile->setContents($uploadedImage->getData());
 
