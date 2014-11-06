@@ -116,6 +116,6 @@ class ImageWatermark implements PluginInterface, EventSubscriberInterface
 
     public static function getSubscribedEvents()
     {
-        return array(CKFinderEvent::FILE_UPLOAD_BEFORE_SAVE => 'addWatermark');
+        return array(CKFinderEvent::FILE_UPLOAD => 'addWatermark');
     }
 }
