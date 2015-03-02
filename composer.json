@@ -8,7 +8,7 @@
         }
     ],
     "require": {
-        "cksource/ckfinder": "dev-develop"
+        "cksource/ckfinder": "dev-master"
     },
     "repositories": [
         {

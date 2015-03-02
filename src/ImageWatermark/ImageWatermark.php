@@ -23,15 +23,10 @@ class ImageWatermark implements PluginInterface, EventSubscriberInterface
         $this->app = $app;
     }
 
-    public function getJavaScript()
-    {
-        // Returns JavaScript plugin code for CKFinder frontend
-    }
-
     public function getDefaultConfig()
     {
         return array(
-            'imagePath' => __DIR__ . '/stamp.png',
+            'imagePath' => __DIR__ . '/logo.png',
             'position' => array(
                 'right'  => null,
                 'bottom' => null,
