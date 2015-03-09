@@ -3,8 +3,8 @@
     "description": "Image watermark plugin for CKFinder 3",
     "authors": [
         {
-            "name": "Pawel Wiaderny",
-            "email": "p.wiaderny@cksource.com"
+            "name": "CKSource",
+            "homepage": "http://cksource.com"
         }
     ],
     "require": {
@@ -13,7 +13,7 @@
     "repositories": [
         {
             "type": "vcs",
-            "url":  "git@github.com:cksource/ckfinder-connector-php.git"
+            "url": "git@github.com:cksource/ckfinder-connector-php.git"
         }
     ],
     "autoload": {
