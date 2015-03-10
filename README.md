@@ -11,9 +11,9 @@ To set custom image to use as a watermark add following option to main CKFinder 
 
 ```php
 // ...
-'ImageWatermark' => array(
+$config['ImageWatermark'] = [
     'imagePath' => __DIR__ . '/custom/image/path/stamp.png'
-),
+];
 ```
 
 **Note:** make sure your image path is absolute, and for best results use transparent png image.
@@ -23,13 +23,13 @@ To change default watermark position you need to add `position` option in plugin
 
 ```php
 // ...
-'ImageWatermark' => array(
+$config['ImageWatermark'] = [
     'imagePath' => __DIR__ . '/custom/image/path/stamp.png', // Use also custom image
-    'position' => array(
+    'position' => [
         'right'  => 0,
         'bottom' => 0
-    )
-),
+    ]
+];
 ```
 
 The `position` option takes two arguments corresponding to image borders. Possible `position` keys values:
@@ -41,29 +41,29 @@ pixels, or string 'center' to make watermark centered between current and opposi
 A few examples of watermark (▣) position for used `position` option:
 
 ```php
-'ImageWatermark' => array(                  ┌────────────────┐
-    'position' => array(                    │                │
+$config['ImageWatermark'] = [               ┌────────────────┐
+    'position' => [                         │                │
         'right'  => 0,                      │                │
         'bottom' => 0                       │              ▣ │
-    )                                       └────────────────┘
-),
+    ]                                       └────────────────┘
+];
 ```
 
 
 ```php
-'ImageWatermark' => array(                  ┌────────────────┐
-    'position' => array(                    │                │
+$config['ImageWatermark'] = [               ┌────────────────┐
+    'position' => [                         │                │
         'right'  => 'center',               │                │
         'bottom' => 0                       │        ▣       │
-    )                                       └────────────────┘
-),
+    ]                                       └────────────────┘
+];
 ```
 
 ```php
-'ImageWatermark' => array(                  ┌────────────────┐
-    'position' => array(                    │                │
+$config['ImageWatermark'] = [               ┌────────────────┐
+    'position' => [                         │                │
         'right'  => 0,                      │               ▣│
         'bottom' => 'center'                │                │
-    )                                       └────────────────┘
-),
+    ]                                       └────────────────┘
+];
 ```

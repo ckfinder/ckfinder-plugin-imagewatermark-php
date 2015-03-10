@@ -1,8 +1,17 @@
 <?php
 
+/*
+ * CKFinder
+ * ========
+ * http://cksource.com/ckfinder
+ * Copyright (C) 2007-2015, CKSource - Frederico Knabben. All rights reserved.
+ *
+ * The software, this file and its contents are subject to the MIT License.
+ * Please read the LICENSE.md file before using, installing, copying,
+ * modifying or distribute this file or part of its contents.
+ */
 
 namespace CKSource\CKFinder\Plugin\ImageWatermark;
-
 
 use CKSource\CKFinder\CKFinder;
 use CKSource\CKFinder\Event\CKFinderEvent;
@@ -11,6 +20,9 @@ use CKSource\CKFinder\Image;
 use CKSource\CKFinder\Plugin\PluginInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
+/**
+ * ImageWtermark plugin class
+ */
 class ImageWatermark implements PluginInterface, EventSubscriberInterface
 {
     /**
@@ -18,25 +30,46 @@ class ImageWatermark implements PluginInterface, EventSubscriberInterface
      */
     protected $app;
 
+    /**
+     * Method used to inject DI container to the plugin
+     *
+     * @param CKFinder $app
+     */
     public function setContainer(CKFinder $app)
     {
         $this->app = $app;
     }
 
+    /**
+     * Returns an array with default configuration for this plugin. Any of
+     * the plugin config options can be overwritten in CKFinder configuration file.
+     *
+     * @return array plugin default configuration
+     */
     public function getDefaultConfig()
     {
-        return array(
+        return [
             'imagePath' => __DIR__ . '/logo.png',
-            'position' => array(
+            'position' => [
                 'right'  => null,
                 'bottom' => null,
                 'left'   => null,
                 'top'    => null
-            )
-        );
+            ]
+        ];
     }
 
-    public function calculatePosition(Image $uploadedImage, Image $watermarkImage)
+    /**
+     * Calculates position of watermark image
+     *
+     * @param int $uploadedImageWidth
+     * @param int $uploadedImageHeight
+     * @param int $watermarkImageWidth
+     * @param int $watermarkImageHeight
+     *
+     * @return array calculated image position [X, Y]
+     */
+    public function calculatePosition($uploadedImageWidth, $uploadedImageHeight, $watermarkImageWidth, $watermarkImageHeight)
     {
         $dstX = $dstY = 0;
 
@@ -46,17 +79,17 @@ class ImageWatermark implements PluginInterface, EventSubscriberInterface
             $positionRight = $position['right'];
 
             if ($positionRight === 'center') {
-                $dstX = $uploadedImage->getWidth() / 2 - $watermarkImage->getWidth() / 2;
+                $dstX = $uploadedImageWidth / 2 - $watermarkImageWidth / 2;
             } else {
-                $dstX = $uploadedImage->getWidth() - $watermarkImage->getWidth() - (int)$positionRight;
+                $dstX = $uploadedImageWidth - $watermarkImageWidth - (int) $positionRight;
             }
         } elseif (isset($position['left'])) {
             $positionLeft = $position['left'];
 
             if ($positionLeft === 'center') {
-                $dstX = $uploadedImage->getWidth() / 2 - $watermarkImage->getWidth() / 2;
+                $dstX = $uploadedImageWidth / 2 - $watermarkImageWidth / 2;
             } else {
-                $dstX = (int)$positionLeft;
+                $dstX = (int) $positionLeft;
             }
         }
 
@@ -64,23 +97,28 @@ class ImageWatermark implements PluginInterface, EventSubscriberInterface
             $positionTop = $position['top'];
 
             if ($positionTop === 'center') {
-                $dstY = $uploadedImage->getHeight() / 2 - $watermarkImage->getHeight() / 2;
+                $dstY = $uploadedImageHeight / 2 - $watermarkImageHeight / 2;
             } else {
-                $dstY = (int)$positionTop;
+                $dstY = (int) $positionTop;
             }
         } elseif (isset($position['bottom'])) {
             $positionBottom = $position['bottom'];
 
             if ($positionBottom === 'center') {
-                $dstY = $uploadedImage->getHeight() / 2 - $watermarkImage->getHeight() / 2;
+                $dstY = $uploadedImageHeight / 2 - $watermarkImageHeight / 2;
             } else {
-                $dstY = $uploadedImage->getHeight() - $watermarkImage->getHeight() - (int)$positionBottom;
+                $dstY = $uploadedImageHeight - $watermarkImageHeight - (int) $positionBottom;
             }
         }
 
-        return array($dstX, $dstY);
+        return [$dstX, $dstY];
     }
 
+    /**
+     * Event listener method adding watermark to uploaded image
+     *
+     * @param FileUploadEvent $event
+     */
     public function addWatermark(FileUploadEvent $event)
     {
         $uploadedFile = $event->getUploadedFile();
@@ -96,7 +134,7 @@ class ImageWatermark implements PluginInterface, EventSubscriberInterface
                 $watermarkImageGD = $watermarkImage->getGDImage();
 
                 // Calculate position
-                list($dstX, $dstY) = $this->calculatePosition($uploadedImage, $watermarkImage);
+                list($dstX, $dstY) = $this->calculatePosition($uploadedImage->getWidth(), $uploadedImage->getHeight(), $watermarkImage->getWidth(), $uploadedImage->getHeight());
 
                 imagecopy($uploadedImageGD, $watermarkImageGD, $dstX, $dstY, 0, 0, $watermarkImage->getWidth(), $watermarkImage->getHeight());
 
@@ -109,8 +147,28 @@ class ImageWatermark implements PluginInterface, EventSubscriberInterface
         }
     }
 
+    /**
+     * Returns an array of event names this subscriber wants to listen to.
+     *
+     * The array keys are event names and the value can be:
+     *
+     *  * The method name to call (priority defaults to 0)
+     *  * An array composed of the method name to call and the priority
+     *  * An array of arrays composed of the method names to call and respective
+     *    priorities, or 0 if unset
+     *
+     * For instance:
+     *
+     *  * array('eventName' => 'methodName')
+     *  * array('eventName' => array('methodName', $priority))
+     *  * array('eventName' => array(array('methodName1', $priority), array('methodName2'))
+     *
+     * @return array The event names to listen to
+     */
     public static function getSubscribedEvents()
     {
-        return array(CKFinderEvent::FILE_UPLOAD => 'addWatermark');
+        return [
+            CKFinderEvent::FILE_UPLOAD => 'addWatermark'
+        ];
     }
 }
