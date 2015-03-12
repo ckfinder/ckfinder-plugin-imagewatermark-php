@@ -5,7 +5,13 @@ This plugin adds a watermark to images uploaded with CKFinder.
 
 **Supported images extensions:** jpg, jpeg, gif, png.
 
-## Configuration options
+
+### Installation with Composer
+```
+composer require ckfinder/ckfinder-plugin-imagewatermark-php
+```
+
+### Configuration options
 
 To set custom image to use as a watermark add following option to main CKFinder config file (usually named `config.php`):
 

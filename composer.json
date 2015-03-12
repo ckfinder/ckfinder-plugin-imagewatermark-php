@@ -1,6 +1,7 @@
 {
-    "name": "cksource/ckfinder-plugin-watermark",
+    "name": "ckfinder/ckfinder-plugin-imagewatermark-php",
     "description": "Image watermark plugin for CKFinder 3",
+    "license": "MIT",
     "authors": [
         {
             "name": "CKSource",
