@@ -1,19 +1,16 @@
-CKFinder ImageWatermark plugin
-==============================
+# CKFinder 3 ImageWatermark Plugin
 
-This plugin adds a watermark to images uploaded with CKFinder.
+This is an official CKFinder 3 plugin that adds a watermark to images uploaded with CKFinder.
 
-**Supported images extensions:** jpg, jpeg, gif, png.
+**Supported image extensions:** `jpg`, `jpeg`, `gif`, `png`.
 
+## Plugin Installation
 
-### Installation with Composer
-```
-composer require ckfinder/ckfinder-plugin-imagewatermark-php
-```
+See the [Plugin Installation and Configuration](http://docs.cksource.com/ckfinder3-php/plugins.html#plugins_installation_and_configuration) documentation.
 
-### Configuration options
+## Configuration Options
 
-To set custom image to use as a watermark add following option to main CKFinder config file (usually named `config.php`):
+To set a custom image to use as a watermark add the following option to the main CKFinder configuration file (usually named `config.php`):
 
 ```php
 // ...
@@ -22,15 +19,14 @@ $config['ImageWatermark'] = [
 ];
 ```
 
-**Note:** make sure your image path is absolute, and for best results use transparent png image.
+**Note:** Make sure that your image path is absolute, and use a transparent `png` image for best results.
 
-
-To change default watermark position you need to add `position` option in plugin configuration node:
+To change the default watermark position you need to add the `position` option in the plugin configuration node:
 
 ```php
 // ...
 $config['ImageWatermark'] = [
-    'imagePath' => __DIR__ . '/custom/image/path/stamp.png', // Use also custom image
+    'imagePath' => __DIR__ . '/custom/image/path/stamp.png', // Also use a custom image.
     'position' => [
         'right'  => 0,
         'bottom' => 0
@@ -38,13 +34,16 @@ $config['ImageWatermark'] = [
 ];
 ```
 
-The `position` option takes two arguments corresponding to image borders. Possible `position` keys values:
-`top`, `right`, `bottom`, `left`. Suboptions `top`-`bottom` and `left`-`right` are mutually exclusive, and can't
-be used together. Each position suboption can take as value an integer - a distance to chosen border measured in
-pixels, or string 'center' to make watermark centered between current and opposite border.
+The `position` option takes two arguments corresponding to image borders.
 
+Possible `position` key values are: `top`, `right`, `bottom`, `left`.
 
-A few examples of watermark (▣) position for used `position` option:
+Suboptions `top`-`bottom` and `left`-`right` are mutually exclusive, and cannot be used together.
+
+Each position suboption can take an integer as a value. This integer denotes the distance to the selected border measured in
+pixels. Alternatively, you can use the `'center'` string to make the watermark centered between the current and the opposite border.
+
+Here are a few examples of the watermark (▣) position for the following `position` options used:
 
 ```php
 $config['ImageWatermark'] = [               ┌────────────────┐

@@ -21,7 +21,7 @@ use CKSource\CKFinder\Plugin\PluginInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 /**
- * ImageWtermark plugin class
+ * ImageWtermark plugin class.
  */
 class ImageWatermark implements PluginInterface, EventSubscriberInterface
 {
@@ -31,7 +31,7 @@ class ImageWatermark implements PluginInterface, EventSubscriberInterface
     protected $app;
 
     /**
-     * Method used to inject DI container to the plugin
+     * Method used to inject the DI container to the plugin.
      *
      * @param CKFinder $app
      */
@@ -41,10 +41,10 @@ class ImageWatermark implements PluginInterface, EventSubscriberInterface
     }
 
     /**
-     * Returns an array with default configuration for this plugin. Any of
-     * the plugin config options can be overwritten in CKFinder configuration file.
+     * Returns an array with the default configuration for this plugin. Any of
+     * the plugin configuration options can be overwritten in the CKFinder configuration file.
      *
-     * @return array plugin default configuration
+     * @return array Default plugin configuration
      */
     public function getDefaultConfig()
     {
@@ -60,14 +60,14 @@ class ImageWatermark implements PluginInterface, EventSubscriberInterface
     }
 
     /**
-     * Calculates position of watermark image
+     * Calculates the position of the watermark image.
      *
      * @param int $uploadedImageWidth
      * @param int $uploadedImageHeight
      * @param int $watermarkImageWidth
      * @param int $watermarkImageHeight
      *
-     * @return array calculated image position [X, Y]
+     * @return array Calculated image position [X, Y]
      */
     public function calculatePosition($uploadedImageWidth, $uploadedImageHeight, $watermarkImageWidth, $watermarkImageHeight)
     {
@@ -115,7 +115,7 @@ class ImageWatermark implements PluginInterface, EventSubscriberInterface
     }
 
     /**
-     * Event listener method adding watermark to uploaded image
+     * Event listener method adding the watermark to uploaded image.
      *
      * @param FileUploadEvent $event
      */
@@ -152,10 +152,10 @@ class ImageWatermark implements PluginInterface, EventSubscriberInterface
      *
      * The array keys are event names and the value can be:
      *
-     *  * The method name to call (priority defaults to 0)
-     *  * An array composed of the method name to call and the priority
+     *  * The method name to call (priority defaults to 0).
+     *  * An array composed of the method name to call and the priority.
      *  * An array of arrays composed of the method names to call and respective
-     *    priorities, or 0 if unset
+     *    priorities, or 0 if unset.
      *
      * For instance:
      *
