@@ -121,7 +121,7 @@ class ImageWatermark implements PluginInterface, EventSubscriberInterface
      */
     public function addWatermark(FileUploadEvent $event)
     {
-        $uploadedFile = $event->getUploadedFile();
+        $uploadedFile = $event->getFile();
 
         if (Image::isSupportedExtension($uploadedFile->getExtension()) && $uploadedFile->isValidImage()) {
             $uploadedImage = Image::create($uploadedFile->getContents());
@@ -134,11 +134,11 @@ class ImageWatermark implements PluginInterface, EventSubscriberInterface
                 $watermarkImageGD = $watermarkImage->getGDImage();
 
                 // Calculate position
-                list($dstX, $dstY) = $this->calculatePosition($uploadedImage->getWidth(), $uploadedImage->getHeight(), $watermarkImage->getWidth(), $uploadedImage->getHeight());
+                list($dstX, $dstY) = $this->calculatePosition($uploadedImage->getWidth(), $uploadedImage->getHeight(), $watermarkImage->getWidth(), $watermarkImage->getHeight());
 
                 imagecopy($uploadedImageGD, $watermarkImageGD, $dstX, $dstY, 0, 0, $watermarkImage->getWidth(), $watermarkImage->getHeight());
 
-                $uploadedFile->setContents($uploadedImage->getData());
+                $uploadedFile->save($uploadedImage->getData());
 
                 unset($watermarkImage);
             }
