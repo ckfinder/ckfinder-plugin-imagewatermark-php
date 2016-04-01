@@ -4,7 +4,7 @@
  * CKFinder
  * ========
  * http://cksource.com/ckfinder
- * Copyright (C) 2007-2015, CKSource - Frederico Knabben. All rights reserved.
+ * Copyright (C) 2007-2016, CKSource - Frederico Knabben. All rights reserved.
  *
  * The software, this file and its contents are subject to the MIT License.
  * Please read the LICENSE.md file before using, installing, copying,
@@ -21,7 +21,7 @@ use CKSource\CKFinder\Plugin\PluginInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 /**
- * ImageWtermark plugin class.
+ * The ImageWtermark plugin class.
  */
 class ImageWatermark implements PluginInterface, EventSubscriberInterface
 {
@@ -133,7 +133,7 @@ class ImageWatermark implements PluginInterface, EventSubscriberInterface
                 $watermarkImage = Image::create(file_get_contents($watermarkImagePath));
                 $watermarkImageGD = $watermarkImage->getGDImage();
 
-                // Calculate position
+                // Calculate the position.
                 list($dstX, $dstY) = $this->calculatePosition($uploadedImage->getWidth(), $uploadedImage->getHeight(), $watermarkImage->getWidth(), $watermarkImage->getHeight());
 
                 imagecopy($uploadedImageGD, $watermarkImageGD, $dstX, $dstY, 0, 0, $watermarkImage->getWidth(), $watermarkImage->getHeight());
