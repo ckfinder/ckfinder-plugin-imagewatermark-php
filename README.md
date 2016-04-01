@@ -76,4 +76,4 @@ $config['ImageWatermark'] = [               ┌───────────
 ## License
 
 Copyright (c) 2007-2016, CKSource - Frederico Knabben. All rights reserved.
-For license details see: [LICENSE.md](https://github.com/ckfinder/ckfinder-plugin-imagewatermark-php/blob/master/README.md).
+For license details see: [LICENSE.md](https://github.com/ckfinder/ckfinder-plugin-imagewatermark-php/blob/master/LICENSE.md).
