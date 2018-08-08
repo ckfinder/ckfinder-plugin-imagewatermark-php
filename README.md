@@ -6,7 +6,7 @@ This is an official CKFinder 3 plugin that adds a watermark to images uploaded w
 
 ## Plugin Installation
 
-See the [Plugin Installation and Configuration](http://docs.cksource.com/ckfinder3-php/plugins.html#plugins_installation_and_configuration) documentation.
+See the [Plugin Installation and Configuration](https://ckeditor.com/docs/ckfinder/ckfinder3-php/plugins.html#plugins_installation_and_configuration) documentation.
 
 ## Configuration Options
 
